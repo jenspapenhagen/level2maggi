@@ -1,6 +1,7 @@
 package de.papenhagen.service;
 
 import de.papenhagen.entities.Root;
+import io.quarkus.cache.CacheResult;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -24,7 +25,8 @@ public class InfoCrawler {
 
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
-    public CompletionStage<Root> levleSanktArnual() {
+    @CacheResult(cacheName = "level-cache")
+    public CompletionStage<Root> levelSanktArnual() {
         Client client = ClientBuilder
                 .newBuilder()
                 .executorService(executorService)

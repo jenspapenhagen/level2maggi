@@ -31,7 +31,7 @@ public class MeasuringResource {
     public BottleCount endpoint() {
         double convertLvl = 1;
         try {
-            final double levelOfSanktArnual = infoCrawler.levleSanktArnual()
+            final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
                     .toCompletableFuture()
                     .get()
                     .getCurrentMeasurement()
