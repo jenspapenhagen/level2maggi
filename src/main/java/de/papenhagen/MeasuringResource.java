@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -43,5 +44,15 @@ public class MeasuringResource {
         }
 
         return new BottleCount(convertLvl);
+    }
+
+    @GET
+    @Path("clear")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String clear(){
+        infoCrawler.invalidateAll();
+        log.info("clear the level-cache at: {}", LocalDateTime.now());
+
+        return "done";
     }
 }

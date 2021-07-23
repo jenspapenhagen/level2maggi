@@ -1,6 +1,7 @@
 package de.papenhagen.service;
 
 import de.papenhagen.entities.Root;
+import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -42,6 +43,10 @@ public class InfoCrawler {
                 .request()
                 .rx()
                 .get(Root.class);
+    }
+
+    @CacheInvalidateAll(cacheName = "level-cache")
+    public void invalidateAll() {
     }
 
 
