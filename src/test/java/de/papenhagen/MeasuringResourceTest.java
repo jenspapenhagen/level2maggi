@@ -8,9 +8,6 @@ import io.quarkus.test.junit.TestProfile;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletionStage;
-
-
 @QuarkusTest
 @TestProfile(MineProfile.class)
 public class MeasuringResourceTest {

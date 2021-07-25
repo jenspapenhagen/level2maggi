@@ -30,21 +30,26 @@ public class InfoCrawler {
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public Root levelSanktArnual() {
+        final Root fallback = new Root();
+        final CurrentMeasurement currentMeasurement = new CurrentMeasurement();
+        currentMeasurement.setValue(1.0);
+        fallback.setCurrentMeasurement(currentMeasurement);
+
         try {
-            final CompletionStage<Root> rootCompletionStage = callRemote();
-            return rootCompletionStage
+            return callRemote()
                     .toCompletableFuture()
                     .get();
         } catch (Exception e) {
-            log.warn("An Exception get trowed: {}", e.getLocalizedMessage());
-            final Root fallback = new Root();
-            final CurrentMeasurement currentMeasurement = new CurrentMeasurement();
-            currentMeasurement.setValue(1.0);
-            fallback.setCurrentMeasurement(currentMeasurement);
+            log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
             return fallback;
         }
     }
 
+    /**
+     * This remote Call can take some Time, therefore we cache the result.
+     * (this have to be public because the @CacheResult Annotation is not allowed on private methods)
+     * @return the CompletionStage of the remote Call
+     */
     @CacheResult(cacheName = "level-cache")
     public CompletionStage<Root> callRemote() {
         Client client = ClientBuilder
@@ -64,6 +69,9 @@ public class InfoCrawler {
                 .get(Root.class);
     }
 
+    /**
+     * mostly for debugging
+     */
     @CacheInvalidateAll(cacheName = "level-cache")
     public void invalidateAll() {
     }
