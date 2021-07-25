@@ -1,8 +1,10 @@
 package de.papenhagen.service;
 
+import de.papenhagen.entities.CurrentMeasurement;
 import de.papenhagen.entities.Root;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,6 +21,7 @@ import java.util.concurrent.Executors;
  * @author jpapenhagen
  */
 @ApplicationScoped
+@Slf4j
 public class InfoCrawler {
 
     @ConfigProperty(name = "weather.url", defaultValue = "https://www.pegelonline.wsv.de")
@@ -26,8 +29,24 @@ public class InfoCrawler {
 
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
+    public Root levelSanktArnual() {
+        try {
+            final CompletionStage<Root> rootCompletionStage = callRemote();
+            return rootCompletionStage
+                    .toCompletableFuture()
+                    .get();
+        } catch (Exception e) {
+            log.warn("An Exception get trowed: {}", e.getLocalizedMessage());
+            final Root fallback = new Root();
+            final CurrentMeasurement currentMeasurement = new CurrentMeasurement();
+            currentMeasurement.setValue(1.0);
+            fallback.setCurrentMeasurement(currentMeasurement);
+            return fallback;
+        }
+    }
+
     @CacheResult(cacheName = "level-cache")
-    public CompletionStage<Root> levelSanktArnual() {
+    public CompletionStage<Root> callRemote() {
         Client client = ClientBuilder
                 .newBuilder()
                 .executorService(executorService)

@@ -30,18 +30,11 @@ public class MeasuringResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public BottleCount endpoint() {
-        double convertLvl = 1;
-        try {
-            final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
-                    .toCompletableFuture()
-                    .get()
-                    .getCurrentMeasurement()
-                    .getValue();
+        final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
+                .getCurrentMeasurement()
+                .getValue();
 
-            convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
-        } catch (InterruptedException | ExecutionException e) {
-            log.info("InterruptedException or ExecutionException on endpoint: {}", e.getLocalizedMessage());
-        }
+        double convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
 
         return new BottleCount(convertLvl);
     }

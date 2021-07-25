@@ -17,6 +17,4 @@ public class Root {
     private int equidistance;
     private CurrentMeasurement currentMeasurement;
     private GaugeZero gaugeZero;
-
-
 }

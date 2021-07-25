@@ -22,10 +22,11 @@ public class MeasuringResourceTest {
 
 
         // when
-        final CompletionStage<Root> rootCompletionStage = infoCrawler.levelSanktArnual();
+        final Root rootCompletionStage = infoCrawler.levelSanktArnual();
 
         // then
         Assertions.assertNotNull(rootCompletionStage);
+        Assertions.assertEquals(rootCompletionStage.getCurrentMeasurement().getValue(), 1.0);
     }
 
     @Test
