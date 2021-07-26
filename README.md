@@ -1,4 +1,4 @@
-# This is a MircoService for Convert the Level of the Saar into count of "Maggi Würze (250g)" - Bottles
+# This is a MircoService for Converting the Level of the Saar into bottle count of "Maggi Würze (250g)"
 
 #### (Measuring Point St. Arnual)
 
