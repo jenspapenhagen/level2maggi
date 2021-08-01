@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BottleCount {
-    double count;
+    int count;
 }

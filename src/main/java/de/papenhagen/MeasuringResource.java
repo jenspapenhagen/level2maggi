@@ -33,7 +33,7 @@ public class MeasuringResource {
                 .getCurrentMeasurement()
                 .getValue();
 
-        double convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
+        int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
 
         return new BottleCount(convertLvl);
     }
