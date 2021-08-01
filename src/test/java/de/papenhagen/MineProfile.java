@@ -8,7 +8,8 @@ public class MineProfile implements QuarkusTestProfile {
     @Override
     public Map<String, String> getConfigOverrides() {
         return Map.of(
-                "weather.url", "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/"
+                "weather.url", "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/",
+                "weather.bottle.size", "177"
         );
     }
 
