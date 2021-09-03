@@ -49,35 +49,6 @@ public class ConvertMeasuringUnit {
                 .intValue();
     }
 
-    public InputStream filterBlacklist(final InputStream csvInputSteam, final List<Integer> blackList) {
-        List<String> inputList =  new ArrayList<>();
-        // use auto closing of the stream, again IOException
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(csvInputSteam))) {
-            int lineCount = 0;
-            while (reader.ready()) {
-                if (!blackList.contains(lineCount)) {
-                    inputList.add(reader.readLine());
-                }
-                lineCount++;
-            }
-
-        } catch(IOException ex) {
-            ex.printStackTrace();
-        }
-
-        // convert ArrayList of String back to an InputSteam
-        byte[] bytes = inputList.stream().collect(Collectors.joining("\n", "", "\n")).getBytes();
-
-        List<Score> scoreValues = new ArrayList<>();
-        Optional<Score> score = scoreValues.stream()
-                .filter(Objects::nonNull)
-                .findFirst();
-
-        score.isEmpty()
-
-        return new ByteArrayInputStream(bytes);
-    }
-
 
 }
 
