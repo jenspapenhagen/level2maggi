@@ -3,6 +3,8 @@ package de.papenhagen;
 import de.papenhagen.entities.BottleCount;
 import de.papenhagen.service.ConvertMeasuringUnit;
 import de.papenhagen.service.InfoCrawler;
+
+import io.smallrye.common.annotation.NonBlocking;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -28,6 +30,7 @@ public class MeasuringResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @NonBlocking
     public BottleCount endpoint() {
         final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
                 .getCurrentMeasurement()
@@ -41,7 +44,7 @@ public class MeasuringResource {
     @GET
     @Path("clear")
     @Produces(MediaType.TEXT_PLAIN)
-    public String clear(){
+    public String clear() {
         infoCrawler.invalidateAll();
         log.info("clear the level-cache at: {}", LocalDateTime.now());
 
