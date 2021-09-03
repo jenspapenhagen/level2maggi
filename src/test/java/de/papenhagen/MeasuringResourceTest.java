@@ -19,8 +19,7 @@ public class MeasuringResourceTest {
 
 
         // when
-        final Root rootCompletionStage = infoCrawler.levelSanktArnual();
-
+        Root rootCompletionStage =  infoCrawler.levelSanktArnual();
         // then
         Assertions.assertNotNull(rootCompletionStage);
         Assertions.assertEquals(rootCompletionStage.getCurrentMeasurement().getValue(), 1.0);
@@ -36,7 +35,7 @@ public class MeasuringResourceTest {
         final double convert = convertMeasuringUnit.convert(202.0);
 
         // then
-        Assertions.assertEquals(12, convert);
+        Assertions.assertEquals(18, convert);
     }
 
 

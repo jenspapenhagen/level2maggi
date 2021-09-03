@@ -12,3 +12,7 @@ And use the Rest-APi from https://www.pegelonline.wsv.de/
 for scale:\
 ![for scale of a Maggi](https://github.com/jenspapenhagen/level2maggi/blob/master/images/maggifalschegroesse.jpg?raw=true)
 
+testing:
+- cdi with GraalVM
+- cache
+- reactive REST (https://quarkus.io/blog/resteasy-reactive-smart-dispatch/) without overhead
