@@ -1,18 +1,10 @@
 package de.papenhagen.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Service to Convert form Meter into

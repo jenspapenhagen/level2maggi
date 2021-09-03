@@ -5,6 +5,7 @@ import de.papenhagen.service.ConvertMeasuringUnit;
 import de.papenhagen.service.InfoCrawler;
 
 import io.smallrye.common.annotation.NonBlocking;
+import io.smallrye.mutiny.Uni;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -30,15 +31,14 @@ public class MeasuringResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @NonBlocking
-    public BottleCount endpoint() {
+    public Uni<BottleCount> endpoint() {
         final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
                 .getCurrentMeasurement()
                 .getValue();
 
         int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
 
-        return new BottleCount(convertLvl);
+        return Uni.createFrom().item(new BottleCount(convertLvl));
     }
 
     @GET
