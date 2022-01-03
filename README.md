@@ -6,7 +6,8 @@ This Project is based on a default Quarkus Project.
 And use the Rest-APi from https://www.pegelonline.wsv.de/
 
 ## Main Goal:
-- playing around with Quarkus
+- playing around with Quarkus Extensions
+- non-blocking service
 - fun
 
 for scale:\
