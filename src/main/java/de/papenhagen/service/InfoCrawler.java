@@ -1,6 +1,8 @@
 package de.papenhagen.service;
 
+import de.papenhagen.SerializerRegistrationCustomizer;
 import de.papenhagen.entities.CurrentMeasurement;
+import de.papenhagen.entities.GaugeZero;
 import de.papenhagen.entities.Root;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
@@ -8,8 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.json.bind.Jsonb;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Response;
 import java.net.URL;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutorService;
@@ -27,18 +32,34 @@ public class InfoCrawler {
     @ConfigProperty(name = "weather.url", defaultValue = "https://www.pegelonline.wsv.de")
     URL url;
 
+    @Inject
+    SerializerRegistrationCustomizer jsonp;
+
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public Root levelSanktArnual() {
-        final Root fallback = new Root();
         final CurrentMeasurement currentMeasurement = new CurrentMeasurement();
         currentMeasurement.setValue(1.0);
-        fallback.setCurrentMeasurement(currentMeasurement);
+        currentMeasurement.setStateMnwMhw("test");
+        currentMeasurement.setStateNswHsw("test");
+        currentMeasurement.setTimestamp("test time");
+
+        GaugeZero gaugeZero = new GaugeZero();
+        final Root fallback = new Root(
+                "shortname",
+                "LongName",
+                "cm",
+                0,
+                currentMeasurement,
+                gaugeZero);
+
 
         try {
-            return callRemote()
-                    .toCompletableFuture()
-                    .get();
+            final Response response = callRemote();
+            final Jsonb jsonb = jsonp.customize();
+
+            return jsonb.fromJson(response.readEntity(String.class), Root.class);
+
         } catch (Exception e) {
             log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
             return fallback;
@@ -47,11 +68,12 @@ public class InfoCrawler {
 
     /**
      * This remote Call can take some Time, therefore we cache the result.
-     * (this have to be public because the @CacheResult Annotation is not allowed on private methods)
+     * (this has to be public because the @CacheResult Annotation is not allowed on private methods)
+     *
      * @return the CompletionStage of the remote Call
      */
     @CacheResult(cacheName = "level-cache")
-    public CompletionStage<Root> callRemote() {
+    public Response callRemote() {
         Client client = ClientBuilder
                 .newBuilder()
                 .executorService(executorService)
@@ -65,8 +87,7 @@ public class InfoCrawler {
         return client.target(url + station + enpoint)
                 .queryParam("includeCurrentMeasurement", true)
                 .request()
-                .rx()
-                .get(Root.class);
+                .get();
     }
 
     /**
