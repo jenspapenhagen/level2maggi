@@ -39,7 +39,7 @@ public class InfoCrawler {
 
     public Root levelSanktArnual() {
         final CurrentMeasurement currentMeasurement = new CurrentMeasurement();
-        currentMeasurement.setValue(1.0);
+        currentMeasurement.setValue(1);
         currentMeasurement.setStateMnwMhw("test");
         currentMeasurement.setStateNswHsw("test");
         currentMeasurement.setTimestamp("test time");
@@ -56,12 +56,12 @@ public class InfoCrawler {
 
         try {
             final Response response = callRemote();
-            final Jsonb jsonb = jsonp.customize();
+            String output = response.readEntity(String.class);
 
-            return jsonb.fromJson(response.readEntity(String.class), Root.class);
-
+            return jsonp.customize().fromJson(output, Root.class);
         } catch (Exception e) {
             log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
+            log.error("stacktrace: " + e.getStackTrace());
             return fallback;
         }
     }

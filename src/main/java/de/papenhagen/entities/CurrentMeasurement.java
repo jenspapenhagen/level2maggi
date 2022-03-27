@@ -7,7 +7,7 @@ package de.papenhagen.entities;
  */
 public class CurrentMeasurement {
     private String timestamp;
-    private double value;
+    private int value;
     private int trend;
     private String stateMnwMhw;
     private String stateNswHsw;
@@ -15,7 +15,7 @@ public class CurrentMeasurement {
     public CurrentMeasurement() {
     }
 
-    public CurrentMeasurement(String timestamp, double value, int trend, String stateMnwMhw, String stateNswHsw) {
+    public CurrentMeasurement(String timestamp, int value, int trend, String stateMnwMhw, String stateNswHsw) {
         this.timestamp = timestamp;
         this.value = value;
         this.trend = trend;
@@ -31,11 +31,11 @@ public class CurrentMeasurement {
         this.timestamp = timestamp;
     }
 
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(int value) {
         this.value = value;
     }
 

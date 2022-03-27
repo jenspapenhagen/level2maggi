@@ -32,7 +32,7 @@ public class MeasuringResourceTest {
 
 
         // when
-        final double convert = convertMeasuringUnit.convert(202.0);
+        final int convert = convertMeasuringUnit.convert(202);
 
         // then
         Assertions.assertEquals(18, convert);

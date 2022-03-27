@@ -8,8 +8,18 @@ import lombok.Data;
  *
  * @author jpapenhagen
  */
-@Data
-@AllArgsConstructor
 public class BottleCount {
     int count;
+
+    public BottleCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

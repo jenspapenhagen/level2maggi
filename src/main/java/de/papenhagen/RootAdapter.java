@@ -44,7 +44,7 @@ public class RootAdapter implements JsonbAdapter<Root, JsonObject> {
 
         final JsonObject currentMeasurement = jsonObject.getJsonObject("currentMeasurement");
         root.setCurrentMeasurement(new CurrentMeasurement(currentMeasurement.getString("timestamp"),
-                currentMeasurement.getJsonNumber("value").doubleValue(),
+                currentMeasurement.getInt("value"),
                 currentMeasurement.getInt("trend"),
                 currentMeasurement.getString("stateMnwMhw"),
                 currentMeasurement.getString("stateNswHsw")
@@ -52,7 +52,7 @@ public class RootAdapter implements JsonbAdapter<Root, JsonObject> {
         final JsonObject gaugeZero = jsonObject.getJsonObject("gaugeZero");
         root.setGaugeZero(new GaugeZero(gaugeZero.getString("unit"),
                 gaugeZero.getJsonNumber("value").doubleValue(),
-                gaugeZero.getString("validForm")));
+                gaugeZero.getString("validFrom")));
         return root;
     }
 }

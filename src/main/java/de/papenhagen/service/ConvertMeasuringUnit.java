@@ -34,7 +34,7 @@ public class ConvertMeasuringUnit {
      * @param centimeter of the orignal size
      * @return the count of bottles
      */
-    public int convert(final double centimeter) {
+    public int convert(final int centimeter) {
         //checking against divided by zero
         final int defaultBottleSizeInMM = 117;
         final int bottleSizeInMM = (bottleSize <= 0) ? defaultBottleSizeInMM : bottleSize;

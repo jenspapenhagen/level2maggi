@@ -3,9 +3,6 @@ package de.papenhagen;
 import de.papenhagen.entities.BottleCount;
 import de.papenhagen.service.ConvertMeasuringUnit;
 import de.papenhagen.service.InfoCrawler;
-
-import io.smallrye.common.annotation.NonBlocking;
-import io.smallrye.mutiny.Uni;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -31,14 +28,17 @@ public class MeasuringResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Uni<BottleCount> endpoint() {
-        final double levelOfSanktArnual = infoCrawler.levelSanktArnual()
+    public BottleCount endpoint() {
+
+        final int levelOfSanktArnual = infoCrawler.levelSanktArnual()
                 .getCurrentMeasurement()
                 .getValue();
+        log.debug("convertLvl: {}", levelOfSanktArnual);
 
         int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
+        log.debug("convertLvl: {}",convertLvl);
 
-        return Uni.createFrom().item(new BottleCount(convertLvl));
+        return new BottleCount(convertLvl);
     }
 
     @GET
