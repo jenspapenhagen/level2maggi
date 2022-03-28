@@ -3,6 +3,7 @@ package de.papenhagen.service;
 import de.papenhagen.entities.BottleCount;
 import de.papenhagen.entities.CurrentMeasurement;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +19,9 @@ public class MeasuringService {
     @Inject
     ConvertMeasuringUnit convertMeasuringUnit;
 
+    @ConfigProperty(name = "weather.bottle.size", defaultValue = "177")
+    public int bottleSize;
+
     public BottleCount calualteMeasuring(){
         //getting the accurate measurements form the cache
         final CurrentMeasurement currentMeasurement = infoCrawler.levelSanktArnual().getCurrentMeasurement();
@@ -29,10 +33,10 @@ public class MeasuringService {
         log.debug("convertLvl: {}", levelOfSanktArnual);
 
         final int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
-        final String unit =  convertMeasuringUnit.bottleSize + " mm Bottle size.";
+        final String unit =  bottleSize + " mm Bottle size.";
         log.debug("convertLvl: {}", convertLvl);
 
-        return new BottleCount(convertLvl,unit, timestamp);
+        return new BottleCount(convertLvl, unit, timestamp);
     }
 
     public String clear() {
