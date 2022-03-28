@@ -13,6 +13,19 @@ And use the Rest-APi from https://www.pegelonline.wsv.de/
 for scale:\
 ![for scale of a Maggi](https://github.com/jenspapenhagen/level2maggi/blob/master/images/maggifalschegroesse.jpg?raw=true)
 
+
+```
+wget --header="Content-Type: text/json" http://localhost:8080/saar
+```
+For getting this Response
+```json
+{
+  "count":12,
+  "timeStamp":"2022-03-28T19:45:00+02:00",
+  "unit":"0 mm Bottle size."
+}
+```
+
 testing:
 - cdi with GraalVM
 - cache

@@ -1,8 +1,5 @@
 package de.papenhagen.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
  * BottleCount
  *
@@ -10,9 +7,13 @@ import lombok.Data;
  */
 public class BottleCount {
     int count;
+    String unit;
+    String timeStamp;
 
-    public BottleCount(int count) {
+    public BottleCount(int count, String unit, String timeStamp) {
         this.count = count;
+        this.unit = unit;
+        this.timeStamp = timeStamp;
     }
 
     public int getCount() {
@@ -21,5 +22,21 @@ public class BottleCount {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

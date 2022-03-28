@@ -24,7 +24,7 @@ public class ConvertMeasuringUnit {
      * "Maggi Würze 1000g" - Bottle size of 270 mm
      */
     @ConfigProperty(name = "weather.bottle.size", defaultValue = "177")
-    int bottleSize;
+    public int bottleSize;
 
     /**
      * Convert meter into bottle count

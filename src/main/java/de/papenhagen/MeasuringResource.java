@@ -1,8 +1,10 @@
 package de.papenhagen;
 
 import de.papenhagen.entities.BottleCount;
+import de.papenhagen.entities.CurrentMeasurement;
 import de.papenhagen.service.ConvertMeasuringUnit;
 import de.papenhagen.service.InfoCrawler;
+import de.papenhagen.service.MeasuringService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
@@ -21,33 +23,21 @@ import java.time.LocalDateTime;
 public class MeasuringResource {
 
     @Inject
-    InfoCrawler infoCrawler;
-
-    @Inject
-    ConvertMeasuringUnit convertMeasuringUnit;
+    MeasuringService measuringService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public BottleCount endpoint() {
+        final BottleCount bottleCount = measuringService.calualteMeasuring();
+        log.info("BottleCount: {}", bottleCount.getCount());
 
-        final int levelOfSanktArnual = infoCrawler.levelSanktArnual()
-                .getCurrentMeasurement()
-                .getValue();
-        log.debug("convertLvl: {}", levelOfSanktArnual);
-
-        int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
-        log.debug("convertLvl: {}",convertLvl);
-
-        return new BottleCount(convertLvl);
+        return bottleCount;
     }
 
     @GET
     @Path("clear")
     @Produces(MediaType.TEXT_PLAIN)
     public String clear() {
-        infoCrawler.invalidateAll();
-        log.info("clear the level-cache at: {}", LocalDateTime.now());
-
-        return "done";
+        return measuringService.clear();
     }
 }
