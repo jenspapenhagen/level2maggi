@@ -22,7 +22,7 @@ For getting this Response
 {
   "count":12,
   "timeStamp":"2022-03-28T19:45:00+02:00",
-  "unit":"177mm Bottle size."
+  "unit":"An Maggi Würze 250g Bottle with 177 mm height."
 }
 ```
 

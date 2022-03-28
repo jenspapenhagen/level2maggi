@@ -1,5 +1,6 @@
 package de.papenhagen.service;
 
+import de.papenhagen.entities.BottleSize;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -38,9 +39,11 @@ public class ConvertMeasuringUnit {
         //checking against divided by zero
         final int defaultBottleSizeInMM = 117;
         final int bottleSizeInMM = (bottleSize <= 0) ? defaultBottleSizeInMM : bottleSize;
+
+        final BottleSize bottle = BottleSize.of(bottleSizeInMM);
         final double sizeInMM = (centimeter * 10);
 
-        return new BigDecimal(sizeInMM / bottleSizeInMM)
+        return new BigDecimal(sizeInMM / bottle.getSizeInMM())
                 .setScale(0, RoundingMode.UP)
                 .intValue();
     }
