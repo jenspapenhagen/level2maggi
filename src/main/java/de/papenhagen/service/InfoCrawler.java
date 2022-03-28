@@ -61,7 +61,6 @@ public class InfoCrawler {
             return jsonp.customize().fromJson(output, Root.class);
         } catch (Exception e) {
             log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
-            log.error("stacktrace: " + e.getStackTrace());
             return fallback;
         }
     }
