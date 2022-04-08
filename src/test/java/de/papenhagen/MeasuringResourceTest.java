@@ -32,10 +32,13 @@ public class MeasuringResourceTest {
 
 
         // when
-        final int convert = convertMeasuringUnit.convert(202);
+        int convert = 0;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+           convertMeasuringUnit.convert(202);
+        });
 
         // then
-        Assertions.assertEquals(18, convert);
+        Assertions.assertEquals(0, convert);
     }
 
 

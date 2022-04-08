@@ -15,18 +15,23 @@ for scale:\
 
 
 ```
-wget --header="Content-Type: text/json" http://localhost:8080/saar
+wget --header="Content-Type: text/json" http://localhost:8080/177
 ```
 For getting this Response
 ```json
 {
-  "count":12,
-  "timeStamp":"2022-03-28T19:45:00+02:00",
+  "count":15,
+  "timeStamp":"2022-04-08T20:00:00+02:00",
   "unit":"An Maggi Würze 250g Bottle with 177 mm height."
 }
 ```
 
-testing:
+There are this size of bottles available:
+- **Maggi Würze 125g** (with 100mm)
+- **Maggi Würze 250g** (with 177mm)
+- **Maggi Würze 1000g** (with 270mm)
+
+Testing:
 - cdi with GraalVM
 - cache
 - reactive REST (https://quarkus.io/blog/resteasy-reactive-smart-dispatch/) without overhead

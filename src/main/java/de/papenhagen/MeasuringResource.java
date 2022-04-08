@@ -1,24 +1,19 @@
 package de.papenhagen;
 
 import de.papenhagen.entities.BottleCount;
-import de.papenhagen.entities.CurrentMeasurement;
-import de.papenhagen.service.ConvertMeasuringUnit;
-import de.papenhagen.service.InfoCrawler;
 import de.papenhagen.service.MeasuringService;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.time.LocalDateTime;
 
 /**
  * Endpoint to Convert the Level of the Saar in Sankt Arnual
- * into count of "Maggi Würze (250g)" - Bottles
+ * default into count of "Maggi Würze (250g)" - Bottles
  */
-@Path("/saar")
+@Path("/")
 @Slf4j
 public class MeasuringResource {
 
@@ -26,15 +21,23 @@ public class MeasuringResource {
     MeasuringService measuringService;
 
     @GET
+    @Path("{size}")
     @Produces(MediaType.APPLICATION_JSON)
-    public BottleCount endpoint() {
-        final BottleCount bottleCount = measuringService.calualteMeasuring();
-        log.info("BottleCount: {}", bottleCount.getCount());
+    public BottleCount endpoint(@PathParam("size") @DefaultValue("177") final String size) {
+        try {
+            final int parseLong = Integer.parseInt(size);
 
-        return bottleCount;
+            final BottleCount bottleCount = measuringService.calualteMeasuring(parseLong);
+            log.info("BottleCount: {}", bottleCount.getCount());
+            return bottleCount;
+        } catch (IllegalArgumentException exception) {
+            log.warn("wrong input or");
+        }
+
+        return new BottleCount(0, "wrong input", LocalDateTime.now().toString());
     }
 
-    @GET
+    @DELETE
     @Path("clear")
     @Produces(MediaType.TEXT_PLAIN)
     public String clear() {

@@ -20,10 +20,7 @@ public class MeasuringService {
     @Inject
     ConvertMeasuringUnit convertMeasuringUnit;
 
-    @ConfigProperty(name = "weather.bottle.size", defaultValue = "177")
-    public int bottleSize;
-
-    public BottleCount calualteMeasuring() {
+    public BottleCount calualteMeasuring(int bottleSize) throws IllegalArgumentException{
         //getting the accurate measurements form the cache
         final CurrentMeasurement currentMeasurement = infoCrawler.levelSanktArnual().getCurrentMeasurement();
 
@@ -34,7 +31,7 @@ public class MeasuringService {
         log.debug("convertLvl: {}", levelOfSanktArnual);
 
         final int convertLvl = convertMeasuringUnit.convert(levelOfSanktArnual);
-        final BottleSize bottle = BottleSize.of(this.bottleSize);
+        final BottleSize bottle = BottleSize.of(bottleSize);
         final String unit = "An " + bottle.getName() + " Bottle with " + bottle.getSizeInMM() + " mm height.";
         log.debug("convertLvl: {}", convertLvl);
 

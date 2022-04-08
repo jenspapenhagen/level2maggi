@@ -17,7 +17,7 @@ public enum BottleSize {
         return Arrays.stream(BottleSize.values())
                 .filter(b -> b.sizeInMM == size)
                 .findFirst()
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Bottle Size unknown"));
     }
 
     public String getName() {
