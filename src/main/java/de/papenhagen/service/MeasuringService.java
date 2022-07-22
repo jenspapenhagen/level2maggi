@@ -4,7 +4,6 @@ import de.papenhagen.entities.BottleCount;
 import de.papenhagen.entities.BottleSize;
 import de.papenhagen.entities.CurrentMeasurement;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,7 +19,7 @@ public class MeasuringService {
     @Inject
     ConvertMeasuringUnit convertMeasuringUnit;
 
-    public BottleCount calualteMeasuring(int bottleSize) throws IllegalArgumentException{
+    public BottleCount calualteMeasuring(int bottleSize) throws IllegalArgumentException {
         //getting the accurate measurements form the cache
         final CurrentMeasurement currentMeasurement = infoCrawler.levelSanktArnual().getCurrentMeasurement();
 
