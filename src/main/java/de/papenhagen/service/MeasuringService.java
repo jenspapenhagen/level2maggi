@@ -3,15 +3,17 @@ package de.papenhagen.service;
 import de.papenhagen.entities.BottleCount;
 import de.papenhagen.entities.BottleSize;
 import de.papenhagen.entities.CurrentMeasurement;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import java.time.LocalDateTime;
 
 @ApplicationScoped
-@Slf4j
 public class MeasuringService {
+
+    private static final Logger log = LoggerFactory.getLogger(MeasuringService.class);
 
     @Inject
     InfoCrawler infoCrawler;

@@ -2,11 +2,15 @@ package de.papenhagen;
 
 import de.papenhagen.entities.BottleCount;
 import de.papenhagen.service.MeasuringService;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.time.LocalDateTime;
 
 /**
@@ -14,15 +18,15 @@ import java.time.LocalDateTime;
  * default into count of "Maggi Würze (250g)" - Bottles
  */
 @Path("/")
-@Slf4j
 public class MeasuringResource {
+
+    private static final Logger log = LoggerFactory.getLogger(MeasuringResource.class);
 
     @Inject
     MeasuringService measuringService;
 
     @GET
     @Path("{size}")
-    @Produces(MediaType.APPLICATION_JSON)
     public BottleCount endpoint(@PathParam("size") @DefaultValue("177") final String size) {
         try {
             final int parseLong = Integer.parseInt(size);
@@ -39,7 +43,6 @@ public class MeasuringResource {
 
     @DELETE
     @Path("clear")
-    @Produces(MediaType.TEXT_PLAIN)
     public String clear() {
         return measuringService.clear();
     }

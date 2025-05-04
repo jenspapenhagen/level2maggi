@@ -6,14 +6,15 @@ import de.papenhagen.entities.GaugeZero;
 import de.papenhagen.entities.Root;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
-import lombok.extern.slf4j.Slf4j;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Response;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,8 +25,9 @@ import java.util.concurrent.Executors;
  * @author jpapenhagen
  */
 @ApplicationScoped
-@Slf4j
 public class InfoCrawler {
+
+    private static final Logger log = LoggerFactory.getLogger(InfoCrawler.class);
 
     @ConfigProperty(name = "weather.url", defaultValue = "https://www.pegelonline.wsv.de")
     URL url;
@@ -52,11 +54,10 @@ public class InfoCrawler {
                 gaugeZero);
 
 
-        try {
-            final Response response = callRemote();
-            String output = response.readEntity(String.class);
+        try (Response response = callRemote()) {
+                String output = response.readEntity(String.class);
+                return jsonp.customize().fromJson(output, Root.class);
 
-            return jsonp.customize().fromJson(output, Root.class);
         } catch (Exception e) {
             log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
             return fallback;
