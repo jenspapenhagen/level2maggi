@@ -2,7 +2,6 @@ package de.papenhagen.service;
 
 import de.papenhagen.entities.BottleSize;
 import jakarta.enterprise.context.ApplicationScoped;
-import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.math.BigDecimal;
@@ -15,11 +14,10 @@ import java.math.RoundingMode;
  * @author jpapenhagen
  */
 @ApplicationScoped
-@Slf4j
 public class ConvertMeasuringUnit {
 
     /**
-     * Table of Bootle Sizes:
+     * Table of Bottle Sizes:
      * "Maggi Würze 125g" - Bottle size of 100 mm (need test measuring)
      * "Maggi Würze 250g" - Bottle size of 177 mm
      * "Maggi Würze 1000g" - Bottle size of 270 mm
@@ -32,7 +30,7 @@ public class ConvertMeasuringUnit {
      * <p>
      * info: this methode is rounding up the count
      *
-     * @param centimeter of the orignal size
+     * @param centimeter of the original size
      * @return the count of bottles
      */
     public int convert(final int centimeter) {

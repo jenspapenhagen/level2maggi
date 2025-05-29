@@ -56,7 +56,7 @@ public class InfoCrawler {
 
         try (Response response = callRemote()) {
                 String output = response.readEntity(String.class);
-                return jsonp.customize().fromJson(output, Root.class);
+            return jsonp.customize().fromJson(output, Root.class);
 
         } catch (Exception e) {
             log.warn("An Exception get thrown: {}, sending the Fallback", e.getLocalizedMessage());
@@ -72,20 +72,21 @@ public class InfoCrawler {
      */
     @CacheResult(cacheName = "level-cache")
     public Response callRemote() {
-        Client client = ClientBuilder
+        try (Client client = ClientBuilder
                 .newBuilder()
                 .executorService(executorService)
-                .build();
+                .build()) {
 
-        // Pegels Sankt Arnual
-        String station = "SANKT%20ARNUAL";
-        String enpoint = "/W.json";
+            // Pegels Sankt Arnual
+            final String station = "SANKT%20ARNUAL";
+            final String endPoint = "/W.json";
 
-        // complete URL: "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/SANKT%20ARNUAL/W.json?includeCurrentMeasurement=true");
-        return client.target(url + station + enpoint)
-                .queryParam("includeCurrentMeasurement", true)
-                .request()
-                .get();
+            // complete URL: "https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/SANKT%20ARNUAL/W.json?includeCurrentMeasurement=true");
+            return client.target(url + station + endPoint)
+                    .queryParam("includeCurrentMeasurement", true)
+                    .request()
+                    .get();
+        }
     }
 
     /**

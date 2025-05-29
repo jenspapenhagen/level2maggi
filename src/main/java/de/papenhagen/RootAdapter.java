@@ -15,8 +15,8 @@ public class RootAdapter implements JsonbAdapter<Root, JsonObject> {
         final CurrentMeasurement currentMeasurement = root.getCurrentMeasurement();
         final GaugeZero gaugeZero = root.getGaugeZero();
         return Json.createObjectBuilder()
-                .add("shortname", root.getShortname())
-                .add("longname", root.getLongname())
+                .add("shortname", root.getShortName())
+                .add("longname", root.getFullName())
                 .add("unit", root.getUnit())
                 .add("equidistance", root.getEquidistance())
                 .add("currentMeasurement", Json.createObjectBuilder()
@@ -37,8 +37,8 @@ public class RootAdapter implements JsonbAdapter<Root, JsonObject> {
     @Override
     public Root adaptFromJson(JsonObject jsonObject) throws Exception {
         final Root root = new Root();
-        root.setShortname(jsonObject.getString("shortname"));
-        root.setLongname(jsonObject.getString("longname"));
+        root.setShortName(jsonObject.getString("shortname"));
+        root.setFullName(jsonObject.getString("longname"));
         root.setUnit(jsonObject.getString("unit"));
         root.setEquidistance(jsonObject.getInt("equidistance"));
 

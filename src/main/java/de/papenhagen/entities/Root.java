@@ -10,16 +10,16 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Root {
-    private String shortname;
-    private String longname;
+    private String shortName;
+    private String fullName;
     private String unit;
     private int equidistance;
     private CurrentMeasurement currentMeasurement;
     private GaugeZero gaugeZero;
 
-    public Root(String shortname, String longname, String unit, int equidistance, CurrentMeasurement currentMeasurement, GaugeZero gaugeZero) {
-        this.shortname = shortname;
-        this.longname = longname;
+    public Root(String shortName, String fullName, String unit, int equidistance, CurrentMeasurement currentMeasurement, GaugeZero gaugeZero) {
+        this.shortName = shortName;
+        this.fullName = fullName;
         this.unit = unit;
         this.equidistance = equidistance;
         this.currentMeasurement = currentMeasurement;
@@ -29,20 +29,20 @@ public class Root {
     public Root() {
     }
 
-    public String getShortname() {
-        return shortname;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setShortname(String shortname) {
-        this.shortname = shortname;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
-    public String getLongname() {
-        return longname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setLongname(String longname) {
-        this.longname = longname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getUnit() {
